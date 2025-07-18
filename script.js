@@ -317,4 +317,73 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'translateY(0) scale(1)';
         });
     });
+    
+    // WhatsApp Brand Section Animations
+    const brandSection = document.querySelector('.whatsapp-brand-section');
+    if (brandSection) {
+        const brandObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const logoBrand = entry.target.querySelector('.whatsapp-logo-brand');
+                    const brandDescription = entry.target.querySelector('.brand-description');
+                    
+                    // Animate logo brand
+                    setTimeout(() => {
+                        if (logoBrand) {
+                            logoBrand.style.opacity = '1';
+                            logoBrand.style.transform = 'translateY(0) scale(1)';
+                        }
+                    }, 200);
+                    
+                    // Animate description
+                    setTimeout(() => {
+                        if (brandDescription) {
+                            brandDescription.style.opacity = '1';
+                            brandDescription.style.transform = 'translateY(0)';
+                        }
+                    }, 600);
+                    
+                    brandObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        brandObserver.observe(brandSection);
+        
+        // Initially hide elements
+        const logoBrand = brandSection.querySelector('.whatsapp-logo-brand');
+        const brandDescription = brandSection.querySelector('.brand-description');
+        
+        if (logoBrand) {
+            logoBrand.style.opacity = '0';
+            logoBrand.style.transform = 'translateY(50px) scale(0.9)';
+            logoBrand.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        }
+        
+        if (brandDescription) {
+            brandDescription.style.opacity = '0';
+            brandDescription.style.transform = 'translateY(30px)';
+            brandDescription.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        }
+    }
+    
+    // Interactive logo hover effect
+    const logoIcon = document.querySelector('.logo-icon');
+    if (logoIcon) {
+        logoIcon.addEventListener('mouseenter', function() {
+            const svg = this.querySelector('svg');
+            if (svg) {
+                svg.style.transform = 'scale(1.1)';
+                svg.style.filter = 'drop-shadow(0 12px 24px rgba(37, 211, 102, 0.4))';
+            }
+        });
+        
+        logoIcon.addEventListener('mouseleave', function() {
+            const svg = this.querySelector('svg');
+            if (svg) {
+                svg.style.transform = 'scale(1)';
+                svg.style.filter = 'drop-shadow(0 8px 16px rgba(37, 211, 102, 0.3))';
+            }
+        });
+    }
 });

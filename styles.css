@@ -845,6 +845,216 @@ body {
     50% { transform: scaleY(1.2); }
 }
 
+/* WhatsApp Brand Section */
+.whatsapp-brand-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.whatsapp-brand-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 25%, rgba(37, 211, 102, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.brand-showcase {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.logo-presentation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.whatsapp-logo-brand {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(37, 211, 102, 0.1);
+    transition: all 0.3s ease;
+}
+
+.whatsapp-logo-brand:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px rgba(37, 211, 102, 0.2);
+    border-color: rgba(37, 211, 102, 0.3);
+}
+
+.logo-icon {
+    position: relative;
+}
+
+.logo-icon svg {
+    filter: drop-shadow(0 8px 16px rgba(37, 211, 102, 0.3));
+    animation: logoRotate 10s linear infinite;
+}
+
+.logo-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(37, 211, 102, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.brand-name-container {
+    text-align: left;
+}
+
+.brand-name-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brand-slogan {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #059669;
+    margin: 8px 0 0 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.chat-decoration {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.chat-bubble-left,
+.chat-bubble-right {
+    position: absolute;
+    padding: 12px 18px;
+    border-radius: 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: bubbleBounce 3s ease-in-out infinite;
+}
+
+.chat-bubble-left {
+    background: white;
+    color: #1f2937;
+    top: -20px;
+    left: -100px;
+    border-bottom-left-radius: 4px;
+    animation-delay: 0s;
+}
+
+.chat-bubble-right {
+    background: #dcf8c6;
+    color: #1f2937;
+    top: 60px;
+    right: -120px;
+    border-bottom-right-radius: 4px;
+    animation-delay: 1.5s;
+}
+
+.bubble-tail-left,
+.bubble-tail-right {
+    position: absolute;
+    bottom: -6px;
+    width: 0;
+    height: 0;
+}
+
+.bubble-tail-left {
+    left: 16px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid white;
+}
+
+.bubble-tail-right {
+    right: 16px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #dcf8c6;
+}
+
+.brand-description {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.brand-description h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.brand-description p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #4b5563;
+    line-height: 1.7;
+}
+
+/* Animations */
+@keyframes logoRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes bubbleBounce {
+    0%, 100% { 
+        transform: translateY(0px);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
 /* Features Section */
 .features {
     padding: 100px 0;
@@ -1071,6 +1281,29 @@ body {
     .floating-chat-bubbles {
         display: none;
     }
+    
+    .whatsapp-logo-brand {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+    }
+    
+    .brand-name-container {
+        text-align: center;
+    }
+    
+    .brand-name-text {
+        font-size: 36px;
+    }
+    
+    .brand-description h2 {
+        font-size: 28px;
+    }
+    
+    .chat-bubble-left,
+    .chat-bubble-right {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1121,5 +1354,17 @@ body {
     .feature-badge {
         width: 200px;
         justify-content: center;
+    }
+    
+    .brand-name-text {
+        font-size: 28px;
+    }
+    
+    .brand-description h2 {
+        font-size: 24px;
+    }
+    
+    .brand-description p {
+        font-size: 16px;
     }
 }
