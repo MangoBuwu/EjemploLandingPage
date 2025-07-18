@@ -212,147 +212,109 @@ window.addEventListener('scroll', throttle(function() {
     // Scroll-based animations go here
 }, 16));
 
-// WhatsApp Chat Functionality
+// WhatsApp Logo Showcase Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const chatInput = document.querySelector('.chat-input input');
-    const sendBtn = document.querySelector('.send-btn');
-    const chatMessages = document.querySelector('.chat-messages');
-    
-    // Auto-scroll chat messages
-    function scrollToBottom() {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    // Simulate new message arrival
-    function addMessage(text, isReceived = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isReceived ? 'received' : 'sent'}`;
-        
-        const currentTime = new Date().toLocaleTimeString('es-ES', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        
-        messageDiv.innerHTML = `
-            <div class="message-bubble">${text}</div>
-            <div class="message-time">${currentTime}</div>
-        `;
-        
-        // Remove typing indicator if it exists
-        const typingIndicator = chatMessages.querySelector('.typing-indicator');
-        if (typingIndicator && isReceived) {
-            typingIndicator.remove();
-        }
-        
-        chatMessages.appendChild(messageDiv);
-        scrollToBottom();
-    }
-    
-    // Show typing indicator
-    function showTypingIndicator() {
-        const existingIndicator = chatMessages.querySelector('.typing-indicator');
-        if (existingIndicator) return;
-        
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="typing-bubble">
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        `;
-        
-        chatMessages.appendChild(typingDiv);
-        scrollToBottom();
-    }
-    
-    // Auto-responses
-    const responses = [
-        "¡Excelente! Te ayudo con eso. ¿Necesitas alguna funcionalidad específica? 🤔",
-        "¡Genial! Puedo ayudarte a crear algo increíble. ¿Tienes algún diseño en mente? 🎨",
-        "¡Perfecto! Vamos a crear algo extraordinario juntos. ¿Empezamos? 🚀",
-        "¡Fantástico! Te guiaré paso a paso. ¿Qué te parece si comenzamos con el diseño? ✨",
-        "¡Increíble! Tengo muchas ideas para tu proyecto. ¿Quieres que te muestre algunas opciones? 💡"
-    ];
-    
-    function getRandomResponse() {
-        return responses[Math.floor(Math.random() * responses.length)];
-    }
-    
-    // Send message function
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (!message) return;
-        
-        // Add user message
-        addMessage(message, false);
-        chatInput.value = '';
-        
-        // Show typing indicator
-        setTimeout(() => {
-            showTypingIndicator();
-        }, 500);
-        
-        // Add bot response
-        setTimeout(() => {
-            addMessage(getRandomResponse(), true);
-        }, 1500 + Math.random() * 1000);
-    }
-    
-    // Event listeners
-    if (sendBtn) {
-        sendBtn.addEventListener('click', sendMessage);
-    }
-    
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        // Focus effect
-        chatInput.addEventListener('focus', function() {
-            this.parentElement.style.boxShadow = '0 0 0 2px rgba(37, 211, 102, 0.2)';
-        });
-        
-        chatInput.addEventListener('blur', function() {
-            this.parentElement.style.boxShadow = 'none';
-        });
-    }
-    
-    // Initial scroll to bottom
-    setTimeout(scrollToBottom, 100);
-    
-    // Animate messages on scroll into view
-    const whatsappSection = document.querySelector('.whatsapp-section');
-    if (whatsappSection) {
-        const whatsappObserver = new IntersectionObserver(function(entries) {
+    // Logo showcase animations
+    const logoShowcase = document.querySelector('.whatsapp-logo-showcase');
+    if (logoShowcase) {
+        const logoObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const messages = entry.target.querySelectorAll('.message');
-                    messages.forEach((message, index) => {
+                    // Animate logo elements
+                    const brandName = entry.target.querySelector('.brand-name');
+                    const tagline = entry.target.querySelector('.brand-tagline');
+                    const description = entry.target.querySelector('.description-text');
+                    const features = entry.target.querySelectorAll('.feature-badge');
+                    
+                    // Stagger animations
+                    setTimeout(() => {
+                        if (brandName) {
+                            brandName.style.opacity = '1';
+                            brandName.style.transform = 'translateY(0)';
+                        }
+                    }, 200);
+                    
+                    setTimeout(() => {
+                        if (tagline) {
+                            tagline.style.opacity = '1';
+                            tagline.style.transform = 'translateY(0)';
+                        }
+                    }, 400);
+                    
+                    setTimeout(() => {
+                        if (description) {
+                            description.style.opacity = '1';
+                            description.style.transform = 'translateY(0)';
+                        }
+                    }, 600);
+                    
+                    // Animate feature badges
+                    features.forEach((feature, index) => {
                         setTimeout(() => {
-                            message.style.opacity = '1';
-                            message.style.transform = 'translateY(0)';
-                        }, index * 200);
+                            feature.style.opacity = '1';
+                            feature.style.transform = 'translateY(0)';
+                        }, 800 + (index * 100));
                     });
-                    whatsappObserver.unobserve(entry.target);
+                    
+                    logoObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.3 });
         
-        whatsappObserver.observe(whatsappSection);
+        logoObserver.observe(logoShowcase);
         
-        // Initially hide messages for animation
-        const messages = whatsappSection.querySelectorAll('.message');
-        messages.forEach(message => {
-            message.style.opacity = '0';
-            message.style.transform = 'translateY(20px)';
-            message.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        // Initially hide elements for animation
+        const animatedElements = logoShowcase.querySelectorAll('.brand-name, .brand-tagline, .description-text, .feature-badge');
+        animatedElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         });
     }
+    
+    // Interactive logo effects
+    const whatsappIcon = document.querySelector('.whatsapp-icon');
+    if (whatsappIcon) {
+        whatsappIcon.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.15) rotate(10deg)';
+            this.style.filter = 'drop-shadow(0 25px 50px rgba(37, 211, 102, 0.4))';
+        });
+        
+        whatsappIcon.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+            this.style.filter = 'drop-shadow(0 20px 40px rgba(37, 211, 102, 0.3))';
+        });
+        
+        // Click effect
+        whatsappIcon.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95) rotate(-5deg)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1.1) rotate(5deg)';
+            }, 150);
+        });
+    }
+    
+    // Parallax effect for floating bubbles
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const bubbles = document.querySelectorAll('.chat-bubble');
+        
+        bubbles.forEach((bubble, index) => {
+            const speed = 0.3 + (index * 0.1);
+            const yPos = scrolled * speed;
+            bubble.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+    
+    // Feature badges hover effects
+    const featureBadges = document.querySelectorAll('.feature-badge');
+    featureBadges.forEach(badge => {
+        badge.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-6px) scale(1.05)';
+        });
+        
+        badge.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
 });
