@@ -211,3 +211,148 @@ function throttle(func, limit) {
 window.addEventListener('scroll', throttle(function() {
     // Scroll-based animations go here
 }, 16));
+
+// WhatsApp Chat Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const chatInput = document.querySelector('.chat-input input');
+    const sendBtn = document.querySelector('.send-btn');
+    const chatMessages = document.querySelector('.chat-messages');
+    
+    // Auto-scroll chat messages
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Simulate new message arrival
+    function addMessage(text, isReceived = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isReceived ? 'received' : 'sent'}`;
+        
+        const currentTime = new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        messageDiv.innerHTML = `
+            <div class="message-bubble">${text}</div>
+            <div class="message-time">${currentTime}</div>
+        `;
+        
+        // Remove typing indicator if it exists
+        const typingIndicator = chatMessages.querySelector('.typing-indicator');
+        if (typingIndicator && isReceived) {
+            typingIndicator.remove();
+        }
+        
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+    }
+    
+    // Show typing indicator
+    function showTypingIndicator() {
+        const existingIndicator = chatMessages.querySelector('.typing-indicator');
+        if (existingIndicator) return;
+        
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="typing-bubble">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        `;
+        
+        chatMessages.appendChild(typingDiv);
+        scrollToBottom();
+    }
+    
+    // Auto-responses
+    const responses = [
+        "¡Excelente! Te ayudo con eso. ¿Necesitas alguna funcionalidad específica? 🤔",
+        "¡Genial! Puedo ayudarte a crear algo increíble. ¿Tienes algún diseño en mente? 🎨",
+        "¡Perfecto! Vamos a crear algo extraordinario juntos. ¿Empezamos? 🚀",
+        "¡Fantástico! Te guiaré paso a paso. ¿Qué te parece si comenzamos con el diseño? ✨",
+        "¡Increíble! Tengo muchas ideas para tu proyecto. ¿Quieres que te muestre algunas opciones? 💡"
+    ];
+    
+    function getRandomResponse() {
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+    
+    // Send message function
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+        
+        // Add user message
+        addMessage(message, false);
+        chatInput.value = '';
+        
+        // Show typing indicator
+        setTimeout(() => {
+            showTypingIndicator();
+        }, 500);
+        
+        // Add bot response
+        setTimeout(() => {
+            addMessage(getRandomResponse(), true);
+        }, 1500 + Math.random() * 1000);
+    }
+    
+    // Event listeners
+    if (sendBtn) {
+        sendBtn.addEventListener('click', sendMessage);
+    }
+    
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Focus effect
+        chatInput.addEventListener('focus', function() {
+            this.parentElement.style.boxShadow = '0 0 0 2px rgba(37, 211, 102, 0.2)';
+        });
+        
+        chatInput.addEventListener('blur', function() {
+            this.parentElement.style.boxShadow = 'none';
+        });
+    }
+    
+    // Initial scroll to bottom
+    setTimeout(scrollToBottom, 100);
+    
+    // Animate messages on scroll into view
+    const whatsappSection = document.querySelector('.whatsapp-section');
+    if (whatsappSection) {
+        const whatsappObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const messages = entry.target.querySelectorAll('.message');
+                    messages.forEach((message, index) => {
+                        setTimeout(() => {
+                            message.style.opacity = '1';
+                            message.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    });
+                    whatsappObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        whatsappObserver.observe(whatsappSection);
+        
+        // Initially hide messages for animation
+        const messages = whatsappSection.querySelectorAll('.message');
+        messages.forEach(message => {
+            message.style.opacity = '0';
+            message.style.transform = 'translateY(20px)';
+            message.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+    }
+});
